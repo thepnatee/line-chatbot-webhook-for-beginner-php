@@ -30,12 +30,11 @@ line-chatbot-webhook-for-beginner-php
 ### Step 4 : Copy Script. ###
 - cd line-chatbot-webhook-for-beginner-php (ตรวจสอบว่ายังอยู่ตำแหน่งไฟล์นี้นะ)
 - Copy 5 บรรทัดแล้ววางบน Terminal
-
-    git init
-    heroku git:remote -a thepnatee-line-chatbot-lab101
-    git add .
-    git commit -am "make it better"
-    git push heroku master
+    - git init
+    - heroku git:remote -a thepnatee-line-chatbot-lab101
+    - git add .
+    - git commit -am "make it better"
+    - git push heroku master
 
 ### Step 5 ###
 - หน้า Heroku จะมีคำว่า Open App ก็จิ้มแรงๆ จะได้ URL : https://thepnatee-line-chatbot-lab101.herokuapp.com/
