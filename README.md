@@ -23,7 +23,7 @@ line-chatbot-webhook-for-beginner-php
 ### Step 3 ###
 - Create Project ChatBotLab101
 - cd ChatBotLab101
-- https://github.com/thepnatee/line-chatbot-webhook-for-beginner-php.git
+- git clone https://github.com/thepnatee/line-chatbot-webhook-for-beginner-php.git
 - cd line-chatbot-webhook-for-beginner-php
 - Open File : Index.php แก้ 'Channel access token'
 
