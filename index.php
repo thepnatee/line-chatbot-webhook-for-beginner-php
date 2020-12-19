@@ -37,6 +37,7 @@ if (!is_null($events['events'])) {
         $message['messagelongitude'] = $event['message']['longitude']; // ค่า longitude จาก location 
         $message['messagestickerId'] = $event['message']['stickerId']; // ค่า stickerId จาก Sticker 
         $message['messagepackageId'] = $event['message']['packageId']; // ค่า packageId จาก Sticker 
+        $message['postbackData'] = $event['postback']['data']; // postback value ที่ แนบมาจาก Post Back Data 
     }
 
 
@@ -99,8 +100,14 @@ if (!is_null($events['events'])) {
     } elseif ($message['eventType'] === 'follow') {
         #สัญญาณประเภทนี้เกิดจากที่ผู้ใช้เพิ่ม Bot เราเป็นเพื่อน
         followEvent($message);
+    } elseif ($message['eventType'] === 'unfollow') {
+        #สัญญาณประเภทนี้เกิดจากที่ผู้ใช้ Block LINE เรา
+        UnfollowEvent($message);
+    } elseif ($message['eventType'] === 'postback') {
+        postbackData($message);
     }
 }
+
 # Message Evenet  : Text
 
 function sentLineMessage_text($message = array())
@@ -145,6 +152,149 @@ function sentLineMessage_text($message = array())
 
             $message['post'] = json_encode($data);
             apiPost($message);
+        } elseif($message['message'] == '#flex'){
+
+            # https://developers.line.biz/flex-simulator/
+            # ใช้ในการวาด Flex
+            $messages = '
+            {
+            "replyToken":"' . $message['replyToken'] . '",
+            "messages":[
+                {
+                    "type": "bubble",
+                    "body": {
+                      "type": "box",
+                      "layout": "vertical",
+                      "contents": [
+                        {
+                          "type": "image",
+                          "url": "https://scdn.line-apps.com/n/channel_devcenter/img/flexsnapshot/clip/clip3.jpg",
+                          "size": "full",
+                          "aspectMode": "cover",
+                          "aspectRatio": "1:1",
+                          "gravity": "center"
+                        },
+                        {
+                          "type": "box",
+                          "layout": "vertical",
+                          "contents": [],
+                          "position": "absolute",
+                          "background": {
+                            "type": "linearGradient",
+                            "angle": "0deg",
+                            "endColor": "#00000000",
+                            "startColor": "#00000099"
+                          },
+                          "width": "100%",
+                          "height": "40%",
+                          "offsetBottom": "0px",
+                          "offsetStart": "0px",
+                          "offsetEnd": "0px"
+                        },
+                        {
+                          "type": "box",
+                          "layout": "horizontal",
+                          "contents": [
+                            {
+                              "type": "box",
+                              "layout": "vertical",
+                              "contents": [
+                                {
+                                  "type": "box",
+                                  "layout": "horizontal",
+                                  "contents": [
+                                    {
+                                      "type": "text",
+                                      "text": "Brown Grand Hotel",
+                                      "size": "xl",
+                                      "color": "#ffffff"
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "box",
+                                  "layout": "baseline",
+                                  "contents": [
+                                    {
+                                      "type": "icon",
+                                      "url": "https://scdn.line-apps.com/n/channel_devcenter/img/fx/review_gold_star_28.png"
+                                    },
+                                    {
+                                      "type": "icon",
+                                      "url": "https://scdn.line-apps.com/n/channel_devcenter/img/fx/review_gold_star_28.png"
+                                    },
+                                    {
+                                      "type": "icon",
+                                      "url": "https://scdn.line-apps.com/n/channel_devcenter/img/fx/review_gold_star_28.png"
+                                    },
+                                    {
+                                      "type": "icon",
+                                      "url": "https://scdn.line-apps.com/n/channel_devcenter/img/fx/review_gold_star_28.png"
+                                    },
+                                    {
+                                      "type": "icon",
+                                      "url": "https://scdn.line-apps.com/n/channel_devcenter/img/fx/review_gray_star_28.png"
+                                    },
+                                    {
+                                      "type": "text",
+                                      "text": "4.0",
+                                      "color": "#a9a9a9"
+                                    }
+                                  ],
+                                  "spacing": "xs"
+                                },
+                                {
+                                  "type": "box",
+                                  "layout": "horizontal",
+                                  "contents": [
+                                    {
+                                      "type": "box",
+                                      "layout": "baseline",
+                                      "contents": [
+                                        {
+                                          "type": "text",
+                                          "text": "¥62,000",
+                                          "color": "#ffffff",
+                                          "size": "md",
+                                          "flex": 0,
+                                          "align": "end"
+                                        },
+                                        {
+                                          "type": "text",
+                                          "text": "¥82,000",
+                                          "color": "#a9a9a9",
+                                          "decoration": "line-through",
+                                          "size": "sm",
+                                          "align": "end"
+                                        }
+                                      ],
+                                      "flex": 0,
+                                      "spacing": "lg"
+                                    }
+                                  ]
+                                }
+                              ],
+                              "spacing": "xs"
+                            }
+                          ],
+                          "position": "absolute",
+                          "offsetBottom": "0px",
+                          "offsetStart": "0px",
+                          "offsetEnd": "0px",
+                          "paddingAll": "20px"
+                        }
+                      ],
+                      "paddingAll": "0px"
+                    }
+                  }
+
+             ]
+            }
+  ';
+
+
+            $message['post'] = json_encode($data);
+            apiPost($message);
 
         } else {
 
@@ -180,6 +330,7 @@ function sentLineMessage_text($message = array())
         }
     }
 }
+
 
  # Message Evenet  : Sticker
 
@@ -246,6 +397,24 @@ function sentLineMessage_noncase($message = array())
     ];
     $message['post'] = json_encode($data);
     apiPost($message);
+}
+
+ # Message Type Event  : Postback
+
+ function postbackData($message = array()) {
+
+
+    $messages = [
+        'type' => 'text',
+        'text' => 'Data ข้อมูลของคุณคือ' . $message['postbackData']
+    ];
+    $data = [
+        'replyToken' => $message['replyToken'],
+        'messages' => [$messages],
+    ];
+
+    $message['post'] = json_encode($data);
+    $this->apiPost($message);
 }
 
 # Post API Reply
@@ -321,6 +490,15 @@ function followEvent($message = array())
 
     $message['post'] = json_encode($data);
     apiPost($message);
+}
+function UnfollowEvent($message = array())
+{
+ 
+      //// Config LINE Notify 
+      //// ส่ง Message  ไป Function แจ้งเตือน
+      // $message['message'] = 'พบผู้ใช้ Block LINE'
+      // sendNotify($message);
+
 }
 
 
