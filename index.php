@@ -142,7 +142,7 @@ function sentLineMessage_text($message = array())
             // Event Objects RAW
             $messages = [
                 'type' => 'text',
-                'text' => json_encode($message)
+                'text' => $message
             ];
             $data = [
                 'replyToken' => $message['replyToken'],
@@ -293,7 +293,7 @@ function sentLineMessage_text($message = array())
   ';
 
 
-            $message['post'] = $data;
+            $message['post'] = $messages;
             apiPost($message);
 
         } else {
@@ -347,14 +347,14 @@ function sentLineMessage_sticker($message = array()) {
     ];
 
     $message['post'] = json_encode($data);
-    $this->apiPost($message);
+    apiPost($message);
 }
 
 # Message Evenet  : Image 
 function sentLineMessage_image($message = array()) {
     $messages = [
         'type' => 'text',
-        'text' => json_encode($message)
+        'text' => $message
     ];
     $data = [
         'replyToken' => $message['replyToken'],
@@ -362,7 +362,7 @@ function sentLineMessage_image($message = array()) {
     ];
 
     $message['post'] = json_encode($data);
-    $this->apiPost($message);
+    apiPost($message);
 }
 
 # Message Evenet  : Location 
@@ -370,7 +370,7 @@ function sentLineMessage_image($message = array()) {
 function sentLineMessage_location($message = array()) {
     $messages = [
         'type' => 'text',
-        'text' => json_encode($message)
+        'text' => $message
     ];
     $data = [
         'replyToken' => $message['replyToken'],
@@ -379,7 +379,7 @@ function sentLineMessage_location($message = array()) {
 
 
     $message['post'] = json_encode($data);
-    $this->apiPost($message);
+    apiPost($message);
 }
 
 
@@ -414,7 +414,7 @@ function sentLineMessage_noncase($message = array())
     ];
 
     $message['post'] = json_encode($data);
-    $this->apiPost($message);
+    apiPost($message);
 }
 
 # Post API Reply
