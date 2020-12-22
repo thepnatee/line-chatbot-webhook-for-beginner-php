@@ -142,7 +142,7 @@ function sentLineMessage_text($message = array())
             // Event Objects RAW
             $messages = [
                 'type' => 'text',
-                'text' => $message
+                'text' => json_encode($message)
             ];
             $data = [
                 'replyToken' => $message['replyToken'],
@@ -293,7 +293,7 @@ function sentLineMessage_text($message = array())
   ';
 
 
-            $message['post'] = json_encode($data);
+            $message['post'] = $data;
             apiPost($message);
 
         } else {
@@ -354,7 +354,7 @@ function sentLineMessage_sticker($message = array()) {
 function sentLineMessage_image($message = array()) {
     $messages = [
         'type' => 'text',
-        'text' => $message
+        'text' => json_encode($message)
     ];
     $data = [
         'replyToken' => $message['replyToken'],
@@ -370,7 +370,7 @@ function sentLineMessage_image($message = array()) {
 function sentLineMessage_location($message = array()) {
     $messages = [
         'type' => 'text',
-        'text' => $message
+        'text' => json_encode($message)
     ];
     $data = [
         'replyToken' => $message['replyToken'],
