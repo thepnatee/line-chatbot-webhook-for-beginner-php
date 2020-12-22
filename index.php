@@ -160,6 +160,11 @@ function sentLineMessage_text($message = array())
             {
             "replyToken":"' . $message['replyToken'] . '",
             "messages":[
+
+              {
+                "type": "flex",
+                "altText": "Getting Personal Information",
+                "contents": {
                 {
                     "type": "bubble",
                     "body": {
@@ -288,7 +293,11 @@ function sentLineMessage_text($message = array())
                     }
                   }
 
-             ]
+                }
+              }
+
+                  
+                  ]
             }
   ';
 
