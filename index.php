@@ -16,6 +16,7 @@ $content = file_get_contents('php://input');
 
 
 // Parse JSON
+// https://developers.line.biz/en/reference/messaging-api/#message-event
 $events = json_decode($content, true);
 
 if (!is_null($events['events'])) {
